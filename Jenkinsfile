@@ -21,9 +21,10 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                bat 'docker login -u yash6422 -p Yash@64220204'
-                bat 'docker tag cicd yash6422/cicd'
-                bat 'docker push yash6422/cicd'
+              script {
+                    withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
+                        docker.image('yash6422/todo-node').push('latest')
+                    }
             }
         }
 
